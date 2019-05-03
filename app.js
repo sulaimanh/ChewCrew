@@ -126,15 +126,12 @@ app.post("/login", function(req, res) {
 });
 
 
-
-
-// const signInRouter = require("./routes/signin");
 const crewRouter = require("./routes/crews");
 const profileRouter = require("./routes/profile");
 const createRouter = require("./routes/create");
 const joinRouter = require("./routes/join");
 const dishesRouter = require("./routes/dishes");
-// app.use("/", signInRouter);
+
 app.use("/crews", crewRouter);
 app.use("/create", createRouter);
 app.use("/profile", profileRouter);
