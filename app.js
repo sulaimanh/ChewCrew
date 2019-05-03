@@ -125,6 +125,38 @@ app.post("/login", function(req, res) {
   });
 });
 
+// - REGISTER - COMPLETE
+app.post("/register", function(req, res) {
+  User.findOne({
+    username: req.body.username
+  }, function(err, user) {
+    if (err) {
+      console.log(err);
+    } else if (user) { // if user exists
+      console.log("Username exists!");
+    } else { // if user doesn't exist then create user
+      User.register({
+        username: req.body.username,
+        firstname: req.body.first,
+        lastname: req.body.last,
+        active: true
+      }, req.body.password, function(err, user) {
+        if (err) {
+          console.log(err);
+        } else {
+          // - Here, we authenticate our user using passport
+          // - We are using local authentication.
+          // - The callback is only triggered if the authentication was successful.
+          //    We managed to successfully set up a cookie that saved their current login session
+          passport.authenticate("local")(req, res, function() {
+            res.redirect("/profile");
+          });
+        }
+      });
+    }
+  });
+});
+
 
 const crewRouter = require("./routes/crews");
 const profileRouter = require("./routes/profile");
