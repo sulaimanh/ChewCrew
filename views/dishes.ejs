@@ -1,0 +1,90 @@
+<%- include("partials/header") -%>
+
+<!-- Add a Dish button -->
+<div class="container-fluid">
+  <h2 class="mb-3">Search for Your Dish</h2>
+
+  <input class="form-control" type="text" name="" value="" placeholder="Name of Dish">
+  <form action="/dishes/addDish" method="post">
+    <a class="btn btn-primary mt-2 w-100" data-toggle="collapse" href="#add" role="button">
+      Add a Dish
+    </a>
+    <div class="collapse" id="add">
+      <div class="card card-body">
+        <div class="row input-group mb-3">
+          <div class="col-12 input-group mb-3">
+            <input name="dish" type="text" class="form-control" placeholder="Dish Name" required="true">
+          </div>
+          <div class="col-12">
+            <label class="btn btn-primary">
+              Upload Picture
+              <input type="file" style="display: none;">
+            </label>
+          </div>
+          <div class="col-12">
+            <textarea name="description" placeholder="Description" class="form-control" name="postBody" rows="5" cols="30"></textarea>
+          </div>
+          <div class="col-12">
+            <input name="tags" class="form-control mt-3" type="text" placeholder="Tags (seperate with commas)">
+          </div>
+        </div>
+        <button class="btn btn-success" type="" name="button">Post</button>
+      </div>
+    </div>
+  </form>
+
+
+
+  <!-- This is the list of dishes -->
+  <!-- When a dish is clicked, it will expand underneath it -->
+  <form action="/dishes/editDish" method="post">
+    <div class="list-group w-100 list-group-flush mt-3" id="home">
+      <table class="table">
+        <% if(dishes.length == 0){ %>
+          <h3 class="font-weight-light mt-4" align="center"><i class="far fa-sad-tear"></i> You have no dishes saved <i class="far fa-sad-tear"></i></h3>
+        <% } %>
+        <% dishes.forEach(function(item){ %>
+        <tr>
+          <a class="btn pot-link mt-2 w-100" data-toggle="collapse" href="#<%= "a"+item._id %>" role="button">
+            <%= item.name %>
+          </a>
+          <div class="collapse mt-2" id="<%= "a"+item._id %>">
+            <div class="card card-body pl-5 pr-5">
+              <div class="row float-right">
+                <div class="col-md-3 col-sm-12">
+                  <h3>
+                    <%= item.name %>
+                  </h3>
+                  <img src="images/cheeseburger.jpeg" class="img-fluid rounded" alt="">
+                </div>
+                <div class="col-md-9 col-sm-12">
+                  <div class="mt-4">
+                    <h5>Ingredients:</h5>
+                    <p>
+                      <%= item.description %>
+                    </p>
+                  </div>
+                  <br>
+                  <div class="mt-4">
+                    <h5>Tags:</h5>
+                    <p>
+                      <%= item.tags %>
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+              <button type="submit" class="btn btn-secondary mt-4" name="edit" value="<%= item._id %>"><i class="far fa-edit"></i> Edit</button>
+
+              <button formaction="/dishes/deleteDish" type="submit" class="btn btn-danger mt-2 " name="dishTitle" value="<%= item._id %>"><i class="far fa-trash-alt"></i> Delete</button>
+            </div>
+          </div>
+        </tr>
+        <% }) %>
+      </table>
+    </div>
+  </form>
+</div>
+
+
+<%- include("partials/footer") -%>

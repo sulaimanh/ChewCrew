@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Chew Crew</title>
+  <meta charset="utf-8">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,400,900|Ubuntu" rel="stylesheet">
+
+  <!-- CSS Style sheets -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+  <link rel="icon" href="images/favicon.ico">
+
+  <!-- Bootstrap Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<body>
+  <div class="colored-section container-fluid">
+    <!-- Nav Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+
+
+      <a class="navbar-brand" href="/profile"><img height="70px" width="70px" src="images/chewcrewlogo.png" alt="">chew crew</a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mt-1">
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
+
+          <li class="nav-item mt-1">
+            <a class="nav-link" href="#">Settings</a>
+          </li>
+
+          <li class="nav-item mt-1">
+            <a class="nav-link" href="/logout">Sign out</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <nav class="sticky-top bg-white border-bottom">
+    <ul class="mt-1 mb-1 nav nav-pills nav-justified justify-content-center">
+
+      <li class="nav-item">
+        <!-- We will automatically just show the  Crews page when the user first logs on-->
+        <!-- That is why it is active -->
+        <!-- Whatever page the user is on, it should be active -->
+        <% if(active == 0){ %>
+          <a class="nav-link active" href="/crews">Crews</a>
+        <% }else{ %>
+          <a class="nav-link" href="/crews">Crews</a>
+        <% } %>
+
+      </li>
+      <li class="nav-item">
+        <% if(active == 1){ %>
+          <a class="nav-link active" href="/create">Create a Crew</a>
+        <% }else{ %>
+          <a class="nav-link" href="/create">Create a Crew</a>
+        <% } %>
+      </li>
+      <li class="nav-item">
+        <% if(active == 2){ %>
+          <a class="nav-link active" href="/join">Join a Crew</a>
+        <% }else{ %>
+          <a class="nav-link" href="/join">Join a Crew</a>
+        <% } %>
+      </li>
+      <li class="nav-item">
+        <% if(active == 3){ %>
+          <a class="nav-link active" href="/dishes">Your dishes</a>
+        <% }else{ %>
+          <a class="nav-link" href="/dishes">Your dishes</a>
+        <% } %>
+      </li>
+    </ul>
+  </nav>
+
+  <main>
+  <div class="container-fluid mt-5">

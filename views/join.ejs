@@ -1,0 +1,58 @@
+<%- include("partials/header") -%>
+<div class="container-fluid pb-5">
+    <h2>Join a Crew</h2>
+    <input type="text" placeholder="Crew Name" class="form-control" name="" value="">
+    <form action="/crews/enterCrew" method="post">
+      <div class="list-group w-100 list-group-flush mt-3" id="home">
+        <table class="table">
+          <% crews.forEach(function(crew){ %>
+          <tr>
+            <a class="btn pot-link mt-2 w-100" data-toggle="collapse" href="#<%= "a"+crew._id %>" role="button">
+              <%= crew.name %>
+            </a>
+            <div class="collapse mt-2" id="<%= "a"+crew._id %>">
+              <div class="card card-body pl-5 pr-5">
+                <div class="row float-right">
+                  <div class="col-md-3 col-sm-12">
+                    <h3>
+                      <%= crew.name %>
+                    </h3>
+                    <img src="images/cheeseburger.jpeg" class="img-fluid rounded" alt="">
+                  </div>
+                  <div class="col-md-9 col-sm-12">
+                    <div class="mt-4">
+                      <h5>Description:</h5>
+                      <p>
+                        <%= crew.description %>
+                      </p>
+                    </div>
+                    <br>
+                    <div class="mt-4">
+                      <h5>Creator:</h5>
+                      <p>
+                        <%= crew.creatorName %>
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+                <button type="submit" class="btn btn-info mt-4" name="crewId" value="<%= crew._id %>"><i class="fas fa-door-open"></i> Enter Crew</button>
+                <% if(!userCrewsId.toString().includes(crew.id.toString())){ %>
+                    <button formaction="/join/joinCrew" type="submit" class="btn btn-primary mt-2" name="join" value="<%=crew._id%>"><i class="fas fa-user-plus"></i> Join Crew</button>
+                <%} else{ %>
+                  <% if(crew.creator == userId){ %>
+                    <button formaction="/crews/deleteCrew" type="submit" class="btn btn-danger mt-2" name="crewId" value="<%=crew._id%>"><i class="fas fa-trash-alt"></i> Delete Crew</button>
+                  <%} else{%>
+                    <button formaction="/crews/leaveCrew" type="submit" class="btn btn-warning mt-2" name="leave" value="<%=crew._id%>"><i class="fas fa-times-circle"></i> Leave Crew</button>
+                  <%}%>
+                <% } %>
+
+              </div>
+            </div>
+          </tr>
+          <% }) %>
+        </table>
+      </div>
+    </form>
+</div>
+<%- include("partials/footer") -%>
