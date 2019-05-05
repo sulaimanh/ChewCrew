@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const crewSchema = new mongoose.Schema({
   name: {
     type: String,
+    trim : true,
     required: true
   },
   description: {
@@ -33,5 +34,12 @@ const crewSchema = new mongoose.Schema({
   // events : [events],
   // members : [members]
 });
+
+
+
+crewSchema.index({
+  name: "text"
+}, {unique : true});
+
 
 module.exports = mongoose.model("Crew", crewSchema);

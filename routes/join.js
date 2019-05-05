@@ -7,6 +7,7 @@ router.get("/", ensureAuthenticated, crews.join);
 
 router.post("/joinCrew", crews.joinCrew);
 
+
 function ensureAuthenticated(req,res,next){
   if(req.isAuthenticated()){
     return next();

@@ -1,17 +1,25 @@
 <%- include("partials/header") -%>
 <div class="container-fluid">
   <h2 class="mb-3">Search for Your Crew</h2>
-  <input class="form-control" type="text" name="" value="" placeholder="Crew name">
-
+  <form action="/crews" method="get">
+    <div class="row">
+      <div class="col-md-10">
+        <input type="text" placeholder="Crew Name" class="form-control w-100" name="crewName" value="">
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-success w-100" type="submit" name="button">Find Crew</button>
+      </div>
+    </div>
+  </form>
   <form action="/crews/enterCrew" method="post">
     <div class="list-group w-100 list-group-flush mt-3" id="home">
       <table class="table">
         <% if(crews.length == 0){ %>
-        <h3 class="font-weight-light mt-4" align="center"><i class="far fa-sad-tear"></i> You're not a part of any crews <i class="far fa-sad-tear"></i></h3>
+        <h3 class="font-weight-light mt-4" align="center"> No Crews to show </h3>
         <% } %>
         <% crews.forEach(function(crew){ %>
         <tr>
-          <a class="btn pot-link mt-2 w-100" data-toggle="collapse" href="#<%= "a"+crew._id %>" role="button">
+          <a id="www" class="btn pot-link mt-2 w-100" data-toggle="collapse" href="#<%= "a"+crew._id %>" role="button">
             <%= crew.name %>
           </a>
           <div class="collapse mt-2" id="<%= "a"+crew._id %>">
@@ -21,7 +29,7 @@
                   <h3>
                     <%= crew.name %>
                   </h3>
-                  <img src="images/cheeseburger.jpeg" class="img-fluid rounded" alt="">
+                  <img src="images/cheeseburger.jpeg" class="img-fluid rounded" alt="Crew Image">
                 </div>
                 <div class="col-md-9 col-sm-12">
                   <div class="mt-4">

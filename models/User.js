@@ -8,10 +8,24 @@ const userSchema = new mongoose.Schema({
   username: String,
   password: String,
   googleId: String,
-  firstname: String,
-  lastname: String,
-  dishId : [{type: mongoose.Schema.Types.ObjectId, ref: "UserDish", required: false}],
-  crewId : [{type : mongoose.Schema.Types.ObjectId, ref: "Crew", required : false}]
+  firstname: {
+    type: String,
+    trim: true
+  },
+  lastname: {
+    type: String,
+    trim: true
+  },
+  dishId: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "UserDish",
+    required: false
+  }],
+  crewId: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Crew",
+    required: false
+  }]
   // image : ,
 
   // userEvents : [userEvents],

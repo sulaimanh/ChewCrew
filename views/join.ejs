@@ -1,7 +1,16 @@
 <%- include("partials/header") -%>
 <div class="container-fluid pb-5">
     <h2>Join a Crew</h2>
-    <input type="text" placeholder="Crew Name" class="form-control" name="" value="">
+    <form action="/join" method="get">
+      <div class="row">
+        <div class="col-md-10">
+          <input type="text" placeholder="Crew Name" class="form-control w-100" name="crewName" value="">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success w-100" type="submit" name="button">Find Crew</button>
+        </div>
+      </div>
+    </form>
     <form action="/crews/enterCrew" method="post">
       <div class="list-group w-100 list-group-flush mt-3" id="home">
         <table class="table">
@@ -17,7 +26,7 @@
                     <h3>
                       <%= crew.name %>
                     </h3>
-                    <img src="images/cheeseburger.jpeg" class="img-fluid rounded" alt="">
+                    <img src="images/cheeseburger.jpeg" class="img-fluid rounded" alt="Crew Image">
                   </div>
                   <div class="col-md-9 col-sm-12">
                     <div class="mt-4">

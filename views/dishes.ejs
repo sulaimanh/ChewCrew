@@ -3,10 +3,19 @@
 <!-- Add a Dish button -->
 <div class="container-fluid">
   <h2 class="mb-3">Search for Your Dish</h2>
+  <form action="/dishes" method="get">
+    <div class="row">
+      <div class="col-md-10">
+        <input class="form-control" type="text" name="dishName" value="" placeholder="Name of Dish">
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-success w-100" type="submit" name="button">Find Dish</button>
+      </div>
+    </div>
+  </form>
 
-  <input class="form-control" type="text" name="" value="" placeholder="Name of Dish">
   <form action="/dishes/addDish" method="post">
-    <a class="btn btn-primary mt-2 w-100" data-toggle="collapse" href="#add" role="button">
+    <a class="btn btn-primary mt-3 w-100" data-toggle="collapse" href="#add" role="button">
       Add a Dish
     </a>
     <div class="collapse" id="add">
@@ -41,7 +50,7 @@
     <div class="list-group w-100 list-group-flush mt-3" id="home">
       <table class="table">
         <% if(dishes.length == 0){ %>
-          <h3 class="font-weight-light mt-4" align="center"><i class="far fa-sad-tear"></i> You have no dishes saved <i class="far fa-sad-tear"></i></h3>
+          <h3 class="font-weight-light mt-4" align="center"> No dishes saved </h3>
         <% } %>
         <% dishes.forEach(function(item){ %>
         <tr>

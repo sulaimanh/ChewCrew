@@ -17,11 +17,10 @@ const findOrCreate = require("mongoose-findorcreate");
 const app = express();
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
-// parse requests
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(bodyParser.json());
 
 // - Create a session middleware with the given options
 app.use(session({
