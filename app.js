@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 mongoose.set('useFindAndModify', false);
-
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
@@ -14,8 +13,19 @@ const findOrCreate = require("mongoose-findorcreate");
 
 
 
+// // - Set storage engine
+// const storage = multer.diskStorage({
+//   destination : "public/uploads/",
+//   filename : function(req, file, cb){
+//     cb(null, file.fieldname + " - " + Date.now() + path.extname(file.originalname));
+//   }
+// });
+
+
+
 const app = express();
 app.use(express.static("public"));
+app.use("/public/uploads", express.static("public/uploads"))
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

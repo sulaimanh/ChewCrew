@@ -11,9 +11,9 @@ const userDishSchema = new mongoose.Schema({
     required: false
   },
   tags: [String],
-  imagePath: {
-    type: String,
-    required: false
+  image: {
+    type : String,
+    required : false
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,

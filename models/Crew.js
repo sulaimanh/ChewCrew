@@ -15,7 +15,7 @@ const crewSchema = new mongoose.Schema({
     ref: "User",
     required: true
   },
-  imagePath: {
+  image: {
     type: String,
     required: false
   },
@@ -39,7 +39,7 @@ const crewSchema = new mongoose.Schema({
 
 crewSchema.index({
   name: "text"
-}, {unique : true});
+});
 
 
 module.exports = mongoose.model("Crew", crewSchema);

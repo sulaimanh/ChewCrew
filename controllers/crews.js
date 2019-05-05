@@ -7,7 +7,7 @@ exports.crews = (req, res) => {
   active = 0;
   if (req.query.crewName) {
     const crewName = req.query.crewName;
-    Crew.find({
+    Crew.find({_id: req.user.crewId,
         $text: {
           $search: crewName
         }
@@ -46,13 +46,18 @@ exports.createPage = (req, res) => {
 };
 
 exports.createCrew = (req, res) => {
+  let imagePath;
+  if(req.file){
+    imagePath = req.file.path;
+  }
   const creatorName = req.user.firstname + " " + req.user.lastname;
   const crew = new Crew({
     name: req.body.crewName,
     description: req.body.crewDescription,
     creator: req.user._id,
     creatorName: creatorName,
-    members: req.user._id
+    members: req.user._id,
+    image : imagePath
   });
 
   crew.save()

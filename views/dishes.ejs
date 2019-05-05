@@ -14,7 +14,7 @@
     </div>
   </form>
 
-  <form action="/dishes/addDish" method="post">
+  <form action="/dishes/addDish" method="post" enctype="multipart/form-data">
     <a class="btn btn-primary mt-3 w-100" data-toggle="collapse" href="#add" role="button">
       Add a Dish
     </a>
@@ -27,7 +27,7 @@
           <div class="col-12">
             <label class="btn btn-primary">
               Upload Picture
-              <input type="file" style="display: none;">
+              <input name="image" type="file" style="display: none">
             </label>
           </div>
           <div class="col-12">
@@ -64,7 +64,7 @@
                   <h3>
                     <%= item.name %>
                   </h3>
-                  <img src="images/cheeseburger.jpeg" class="img-fluid rounded" alt="">
+                  <img src="<%= item.image %>" class="img-fluid rounded" alt="">
                 </div>
                 <div class="col-md-9 col-sm-12">
                   <div class="mt-4">

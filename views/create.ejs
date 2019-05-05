@@ -1,12 +1,12 @@
 <%- include("partials/header") -%>
-<form action="/create/createCrew" method="post">
+<form action="/create/createCrew" method="post" enctype="multipart/form-data">
   <div class="card card-body">
     <h2>Crew Name</h2>
     <input name="crewName" type="text" class="form-control" placeholder="Crew Name" required="true">
     <div class="mt-3">
       <label class="btn btn-primary">
         Upload Group Picture
-        <input type="file" style="display: none;">
+        <input name="image" type="file" style="display: none;">
       </label>
     </div>
     <div class="mt-3">

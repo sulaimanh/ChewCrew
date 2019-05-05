@@ -6,7 +6,7 @@ exports.dishes = (req, res) => {
   let active = 3;
   if (req.query.dishName) {
     const dishName = req.query.dishName;
-    UserDish.find({
+    UserDish.find({_id: req.user.dishId,
         $text: {
           $search: dishName
         }
@@ -96,11 +96,17 @@ exports.deleteDish = (req, res) => {
 
 
 exports.addDish = (req, res) => {
+  let imagePath;
+  if(req.file){
+    imagePath = req.file.path;
+  }
+  
   const dish = new UserDish({
     name: req.body.dish,
     description: req.body.description,
     tags: req.body.tags,
-    creator: req.user._id
+    creator: req.user._id,
+    image : imagePath
   });
 
   dish.save()
