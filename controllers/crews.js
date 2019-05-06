@@ -8,11 +8,20 @@ exports.crews = (req, res) => {
   active = 0;
   if (req.query.crewName) {
     const crewName = req.query.crewName;
-    Crew.find({_id: req.user.crewId,
+    Crew.find({
+        _id: req.user.crewId,
         $text: {
           $search: crewName
         }
-      },{score : {$meta : "textScore"}}).sort( { score: { $meta: "textScore" } } )
+      }, {
+        score: {
+          $meta: "textScore"
+        }
+      }).sort({
+        score: {
+          $meta: "textScore"
+        }
+      })
       .then(crews => {
         res.render("crews", {
           active: active,
@@ -48,7 +57,7 @@ exports.createPage = (req, res) => {
 
 exports.createCrew = (req, res) => {
   let imagePath;
-  if(req.file){
+  if (req.file) {
     imagePath = req.file.path;
   }
   const creatorName = req.user.firstname + " " + req.user.lastname;
@@ -58,7 +67,7 @@ exports.createCrew = (req, res) => {
     creator: req.user._id,
     creatorName: creatorName,
     members: req.user._id,
-    image : imagePath
+    image: imagePath
   });
 
   crew.save()
@@ -91,7 +100,15 @@ exports.join = (req, res) => {
         $text: {
           $search: crewName
         }
-      },{score : {$meta : "textScore"}}).sort( { score: { $meta: "textScore" } } )
+      }, {
+        score: {
+          $meta: "textScore"
+        }
+      }).sort({
+        score: {
+          $meta: "textScore"
+        }
+      })
       .then(crews => {
         res.render("join", {
           active: active,
@@ -153,18 +170,20 @@ exports.enterCrew = (req, res) => {
       _id: req.params.enterCrew
     })
     .then(crew => {
-      Event.find({_id : crew.events})
-      .then(events => {
-        res.render("enterCrew", {
-          active: active,
-          crew: crew,
-          userId: req.user.id,
-          userCrewsId: req.user.crewId,
-          events : events
-        });
-      }).catch(err => {
-        console.log(err);
-      })
+      Event.find({
+          _id: crew.events
+        })
+        .then(events => {
+          res.render("enterCrew", {
+            active: active,
+            crew: crew,
+            userId: req.user.id,
+            userCrewsId: req.user.crewId,
+            events: events
+          });
+        }).catch(err => {
+          console.log(err);
+        })
     });
 };
 
@@ -225,79 +244,83 @@ exports.editCrew = (req, res) => {
 exports.editCrewPage = (req, res) => {
   let active = 0;
   const crewId = req.params.editCrewPage;
-  Crew.findOne({_id : crewId})
-  .then(crew => {
-    res.render("editCrew", {
-      active : active,
-      crew: crew
+  Crew.findOne({
+      _id: crewId
+    })
+    .then(crew => {
+      res.render("editCrew", {
+        active: active,
+        crew: crew
+      });
+    }).catch(err => {
+      console.log(err);
     });
-  }).catch(err => {
-    console.log(err);
-  });
 }
 
 exports.submitEditCrew = (req, res) => {
   const crewId = req.body.update;
-  Crew.findOne({_id : crewId})
-  .then(crew => {
-    let imagePath = crew.image;
-    if(req.file){
-      imagePath = req.file.path;
-    }
+  Crew.findOne({
+      _id: crewId
+    })
+    .then(crew => {
+      let imagePath = crew.image;
+      if (req.file) {
+        imagePath = req.file.path;
+      }
 
-    Crew.findOneAndUpdate({
-        _id: crewId
-      }, {
-        "$set": {
-          name: req.body.crewName,
-          description: req.body.description,
-          image : imagePath
-        }
-      })
-      .then(dish => {
-        res.redirect("/crews/" + crewId);
-      }).catch(err => {
-        console.log(err);
-      });
-  }).catch(err => {
-    console.log(err);
-  });
+      Crew.findOneAndUpdate({
+          _id: crewId
+        }, {
+          "$set": {
+            name: req.body.crewName,
+            description: req.body.description,
+            image: imagePath
+          }
+        })
+        .then(dish => {
+          res.redirect("/crews/" + crewId);
+        }).catch(err => {
+          console.log(err);
+        });
+    }).catch(err => {
+      console.log(err);
+    });
 }
 
 exports.createEvent = (req, res) => {
   let imagePath;
-  if(req.file){
+  if (req.file) {
     imagePath = req.file.path;
   }
 
   const newEvent = new Event({
     name: req.body.name,
     description: req.body.description,
-    time : req.body.time,
-    date : req.body.date,
-    location : req.body.location,
-    image : imagePath
+    time: req.body.time,
+    date: req.body.date,
+    location: req.body.location,
+    image: imagePath
   });
 
   newEvent.save()
-  .then(createEvent => {
-    Crew.findOneAndUpdate({
-      _id: req.body.create
-    }, {
-      $push : {
-        events : {
-          _id : newEvent._id
-        }
-      }
-    })
-    .then(updatedCrewEvent => {
-      res.redirect("/crews/"+req.body.create);
+    .then(createEvent => {
+      Crew.findOneAndUpdate({
+          _id: req.body.create
+        }, {
+          $push: {
+            events: {
+              _id: newEvent._id
+            }
+          }
+        })
+        .then(updatedCrewEvent => {
+          res.redirect("/crews/" + req.body.create);
+        }).catch(err => {
+          console.log(err);
+        })
     }).catch(err => {
       console.log(err);
-    })
-  }).catch(err => {
-    console.log(err);
-  });
+    });
 }
 
 
@@ -315,11 +338,42 @@ exports.deleteEvent = (req, res) => {
           }
         })
         .then(user => {
-          res.redirect("/crews/"+req.body.crewId);
+          res.redirect("/crews/" + req.body.crewId);
         }).catch(err => {
           console.log(err);
         })
     }).catch(err => {
       console.log(err);
     });
+}
+
+
+
+exports.joinEvent = (req, res) => {
+    Event.updateOne({_id : req.body.join}, {
+      $addToSet : {
+        members : req.user.id
+      }
+    })
+    .then(eventUpdate => {
+      res.redirect("/crews/" + req.body.crewId)
+    }).catch(err => {
+      console.log(err);
+    });
+}
+
+exports.leaveEvent = (req, res) => {
+  const eventId = req.body.leave;
+  Event.updateOne({
+    _id: eventId
+  }, {
+    $pull: {
+      members: req.user._id
+    }
+  })
+  .then(updated => {
+    res.redirect("/crews/" + req.body.crewId);
+  }).catch(err => {
+    console.log(err);
+  });
 }

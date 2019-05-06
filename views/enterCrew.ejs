@@ -116,7 +116,9 @@
                   <br>
                 </div>
                 <button type="submit" class="btn btn-info mt-4" name="join" value="<%=ev._id%>"><i class="fas fa-door-open"></i> Enter Event</button>
-                <% if(crew.creator == userId){ %>
+                <% if(!ev.members.toString().includes(userId.toString())){ %>
+                    <button formaction="/create/joinEvent" type="submit" class="btn btn-primary mt-2" name="join" value="<%= ev._id %>"><i class="fas fa-user-plus"></i> Join Event</button>
+                <%} else if(crew.creator == userId){ %>
                 <button formaction="/create/deleteEvent" type="submit" class="btn btn-danger mt-2" name="eventId" value="<%= ev._id %>"><i class="fas fa-trash-alt"></i> Delete Event</button>
                 <%} else{%>
                 <button formaction="/create/leaveEvent" type="submit" class="btn btn-warning mt-2" name="leave" value="<%=ev._id%>"><i class="fas fa-times-circle"></i> Leave Event</button>

@@ -111,7 +111,6 @@ exports.addDish = (req, res) => {
   if(req.file){
     imagePath = req.file.path;
   }
-  console.log(req.file);
 
   const dish = new UserDish({
     name: req.body.dish,
