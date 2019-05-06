@@ -1,6 +1,7 @@
 const Crew = require("../models/Crew.js");
 const User = require("../models/User.js");
 const UserDish = require("../models/UserDish.js");
+const Event = require("../models/Event.js");
 
 let active = 0;
 exports.crews = (req, res) => {
@@ -152,10 +153,18 @@ exports.enterCrew = (req, res) => {
       _id: req.params.enterCrew
     })
     .then(crew => {
-      res.render("enterCrew", {
-        active: active,
-        crew: crew
-      });
+      Event.find({_id : crew.events})
+      .then(events => {
+        res.render("enterCrew", {
+          active: active,
+          crew: crew,
+          userId: req.user.id,
+          userCrewsId: req.user.crewId,
+          events : events
+        });
+      }).catch(err => {
+        console.log(err);
+      })
     });
 };
 
@@ -208,3 +217,109 @@ exports.deleteCrew = (req, res) => {
       console.log(err);
     });
 };
+
+exports.editCrew = (req, res) => {
+  res.redirect("/create/" + req.body.edit);
+}
+
+exports.editCrewPage = (req, res) => {
+  let active = 0;
+  const crewId = req.params.editCrewPage;
+  Crew.findOne({_id : crewId})
+  .then(crew => {
+    res.render("editCrew", {
+      active : active,
+      crew: crew
+    });
+  }).catch(err => {
+    console.log(err);
+  });
+}
+
+exports.submitEditCrew = (req, res) => {
+  const crewId = req.body.update;
+  Crew.findOne({_id : crewId})
+  .then(crew => {
+    let imagePath = crew.image;
+    if(req.file){
+      imagePath = req.file.path;
+    }
+
+    Crew.findOneAndUpdate({
+        _id: crewId
+      }, {
+        "$set": {
+          name: req.body.crewName,
+          description: req.body.description,
+          image : imagePath
+        }
+      })
+      .then(dish => {
+        res.redirect("/crews/" + crewId);
+      }).catch(err => {
+        console.log(err);
+      });
+  }).catch(err => {
+    console.log(err);
+  });
+}
+
+exports.createEvent = (req, res) => {
+  let imagePath;
+  if(req.file){
+    imagePath = req.file.path;
+  }
+
+  const newEvent = new Event({
+    name: req.body.name,
+    description: req.body.description,
+    time : req.body.time,
+    date : req.body.date,
+    location : req.body.location,
+    image : imagePath
+  });
+
+  newEvent.save()
+  .then(createEvent => {
+    Crew.findOneAndUpdate({
+      _id: req.body.create
+    }, {
+      $push : {
+        events : {
+          _id : newEvent._id
+        }
+      }
+    })
+    .then(updatedCrewEvent => {
+      res.redirect("/crews/"+req.body.create);
+    }).catch(err => {
+      console.log(err);
+    })
+  }).catch(err => {
+    console.log(err);
+  });
+}
+
+
+exports.deleteEvent = (req, res) => {
+  const eventId = req.body.eventId;
+  Event.findOneAndDelete({
+      _id: eventId
+    })
+    .then(ev => {
+      Crew.updateOne({
+          _id: req.body.crewId
+        }, {
+          $pull: {
+            events: eventId
+          }
+        })
+        .then(user => {
+          res.redirect("/crews/"+req.body.crewId);
+        }).catch(err => {
+          console.log(err);
+        })
+    }).catch(err => {
+      console.log(err);
+    });
+}

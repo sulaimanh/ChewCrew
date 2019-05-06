@@ -2,22 +2,21 @@
 
 
 <div class="container-fluid">
-  <form action="/dishes/updateDish" method="post">
+  <form action="/dishes/updateDish" method="post" enctype="multipart/form-data">
     <h2 class="mb-3">Edit Your Dish</h2>
     <div class="card card-body">
       <div class="row input-group mb-3">
         <div class="col-12 input-group mb-3">
           <input name="dish" type="text" class="form-control" value="<%= dish.name %>" required="true">
         </div>
-        <div class="col-12">
-          <form action="/upload" method="post">
-            <label class="btn btn-primary">
-              Change Picture
-              <input type="file" style="display: none;">
-            </label>
-          </form>
+        <div class="col-lg-2">
+          <img src="<%= dish.image %>" class="img-fluid rounded" alt="">
+          <label class="btn btn-primary">
+            Change Picture
+            <input name="image" type="file" style="display: none;">
+          </label>
         </div>
-        <div class="col-12">
+        <div class="col-lg-10 ">
           <textarea name="description" placeholder="Description" class="form-control" name="postBody" rows="5" cols="30"><%= dish.description %></textarea>
         </div>
         <div class="col-12">

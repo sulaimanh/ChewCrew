@@ -48,27 +48,29 @@
   <!-- When a dish is clicked, it will expand underneath it -->
   <form action="/dishes/editDish" method="post">
     <div class="list-group w-100 list-group-flush mt-3" id="home">
+
       <table class="table">
         <% if(dishes.length == 0){ %>
-          <h3 class="font-weight-light mt-4" align="center"> No dishes saved </h3>
+        <h3 class="font-weight-light mt-4" align="center"> No dishes saved </h3>
         <% } %>
         <% dishes.forEach(function(item){ %>
         <tr>
+
           <a class="btn pot-link mt-2 w-100" data-toggle="collapse" href="#<%= "a"+item._id %>" role="button">
             <%= item.name %>
           </a>
           <div class="collapse mt-2" id="<%= "a"+item._id %>">
             <div class="card card-body pl-5 pr-5">
-              <div class="row float-right">
-                <div class="col-md-3 col-sm-12">
-                  <h3>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                  <h3 class="">
                     <%= item.name %>
                   </h3>
-                  <img src="<%= item.image %>" class="img-fluid rounded" alt="">
+                  <img src="<%= item.image %>" class="imageSize img-fluid rounded" alt="">
                 </div>
-                <div class="col-md-9 col-sm-12">
+                <div class="col-lg-8 col-md-7 col-sm-12">
                   <div class="mt-4">
-                    <h5>Ingredients:</h5>
+                    <h5>Ingredients: <!--<button class="float-right btn btn-outline-danger"><i class="fas fa-heart"></i></button> --></h5>
                     <p>
                       <%= item.description %>
                     </p>
@@ -81,11 +83,11 @@
                     </p>
                   </div>
                 </div>
-
               </div>
               <button type="submit" class="btn btn-secondary mt-4" name="edit" value="<%= item._id %>"><i class="far fa-edit"></i> Edit</button>
 
               <button formaction="/dishes/deleteDish" type="submit" class="btn btn-danger mt-2 " name="dishTitle" value="<%= item._id %>"><i class="far fa-trash-alt"></i> Delete</button>
+
             </div>
           </div>
         </tr>

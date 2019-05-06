@@ -16,7 +16,6 @@ router.post("/leaveCrew", crews.leaveCrew);
 router.post("/deleteCrew", crews.deleteCrew);
 
 
-
 function ensureAuthenticated(req,res,next){
   if(req.isAuthenticated()){
     return next();

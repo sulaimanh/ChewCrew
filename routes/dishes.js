@@ -25,7 +25,7 @@ router.post("/editDish", dishes.editDish);
 
 router.post("/deleteDish", dishes.deleteDish);
 
-router.post("/updateDish", dishes.updateDish);
+router.post("/updateDish", upload.single("image"), dishes.updateDish);
 
 router.post("/addDish", upload.single("image"), dishes.addDish);
 

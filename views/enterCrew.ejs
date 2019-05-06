@@ -1,11 +1,143 @@
 <%- include("partials/header") -%>
-
-
 <div class="container-fluid pb-5">
-    <div class="">
-      <h2><%= crew.name %></h2>
-      <hr />
+  <div class="">
+    <p class="float-right">Creator:
+      <%= crew.creatorName %>
+    </p>
+    <h1>
+      <%= crew.name %>
+    </h1>
+
+    <div class="row">
+      <div class="col-lg-3">
+        <img src="/<%= crew.image %>" class="imageSize img-fluid rounded d-inline-block" alt="">
+        <form class="" method="post">
+          <div class="mt-4 btn-group-vertical">
+            <% if(!userCrewsId.toString().includes(crew.id.toString())){ %>
+            <button formaction="/join/joinCrew" type="submit" class="btn btn-primary mt-2" name="join" value="<%= crew._id %>"><i class="fas fa-user-plus"></i> Join Crew</button>
+            <%} else{ %>
+            <% if(crew.creator == userId){ %>
+            <button formaction="/create/editCrew" type="submit" class="btn btn-secondary mt-2" name="edit" value="<%= crew._id %>"><i class="far fa-edit"></i> Edit Crew</button>
+            <button formaction="/crews/deleteCrew" type="submit" class="btn btn-danger mt-2" name="crewId" value="<%= crew._id %>"><i class="fas fa-trash-alt"></i> Delete Crew</button>
+            <%} else{%>
+            <button formaction="/crews/leaveCrew" type="submit" class="btn btn-warning mt-2" name="leave" value="<%= crew._id %>"><i class="fas fa-times-circle"></i> Leave Crew</button>
+            <%}%>
+            <% } %>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-9">
+        <h6>
+          <%= crew.description %>
+        </h6>
+        <h4 class="mt-5">Events:</h4>
+        <hr />
+        <% if(crew.creator == userId){ %>
+        <form action="/create/createEvent" method="post" enctype="multipart/form-data">
+          <a class="btn btn-primary mt-3 w-100" data-toggle="collapse" href="#add" role="button">
+            Create an Event
+          </a>
+          <div class="collapse mt-2" id="add">
+            <div class="card card-body">
+              <div class="row input-group mb-3">
+                <div class="col-12 input-group mb-3">
+                  <input name="name" type="text" class="form-control" placeholder="Event Name" required="true">
+                </div>
+                <div class="col-12">
+                  <label class="btn btn-primary">
+                    Upload Event Picture
+                    <input name="image" type="file" style="display: none">
+                  </label>
+                </div>
+                <div class="col-3">
+                  <input name="date" type="text" class="form-control mb-3" placeholder="MM/DD/YYYY" required="true">
+                </div>
+                <div class="col-3">
+                  <input name="time" type="text" class="form-control mb-3" placeholder="Time of Event" required="true">
+                </div>
+                <div class="col-3">
+                  <input name="location" type="text" class="form-control mb-3" placeholder="Event Location" required="true">
+                </div>
+                <div class="col-12">
+                  <textarea name="description" placeholder="Description" class="form-control" name="postBody" rows="5" cols="30"></textarea>
+                </div>
+              </div>
+              <button class="btn btn-success" type="" value="<%= crew._id %>" name="create">Post</button>
+            </div>
+          </div>
+        </form>
+        <%} else{%>
+        <% } %>
+
+        <% if(crew.members.includes(userId)){ %>
+        <form method="post">
+          <% events.forEach(function(ev){ %>
+          <tr>
+            <a id="www" class="btn pot-link mt-2 w-100" data-toggle="collapse" href="#<%= "a"+ev._id %>" role="button">
+              <%= ev.name %>
+            </a>
+            <div class="collapse mt-2" id="<%= "a"+ev._id %>">
+              <div class="card card-body pl-5 pr-5">
+                <div class="row float-right">
+                  <div class="col-md-4 col-sm-12">
+                    <h3>
+                      <%= ev.name %>
+                    </h3>
+                    <img src="/<%= ev.image %>" class="imageSize img-fluid rounded" alt="">
+                  </div>
+                  <div class="col-md-8 col-sm-12 mt-4">
+                    <h5>Description:</h5>
+                    <p>
+                      <%= ev.description %>
+                    </p>
+
+
+                    <div class="row">
+                      <div class="col-md-4 col-sm-6 mt-4">
+                        <h5>Time:</h5>
+                        <p>
+                          <%= ev.time %>
+                        </p>
+                      </div>
+                      <div class="col-md-4 col-sm-6 mt-4">
+                        <h5>Date:</h5>
+                        <p>
+                          <%= ev.date %>
+                        </p>
+                      </div>
+                      <div class="col-md-4 col-sm-6 mt-4">
+                        <h5>Location:</h5>
+                        <p>
+                          <%= ev.location %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+                <button type="submit" class="btn btn-info mt-4" name="join" value="<%=ev._id%>"><i class="fas fa-door-open"></i> Enter Event</button>
+                <% if(crew.creator == userId){ %>
+                <button formaction="/create/deleteEvent" type="submit" class="btn btn-danger mt-2" name="eventId" value="<%= ev._id %>"><i class="fas fa-trash-alt"></i> Delete Event</button>
+                <%} else{%>
+                <button formaction="/create/leaveEvent" type="submit" class="btn btn-warning mt-2" name="leave" value="<%=ev._id%>"><i class="fas fa-times-circle"></i> Leave Event</button>
+                <%}%>
+                <input type="hidden" name="crewId" value="<%= crew._id %>">
+              </div>
+            </div>
+          </tr>
+          <% }) %>
+        </form>
+        <% } else{%>
+        <h3 class="font-weight-light mt-4" align="center"> You are not a part of this crew. </h3>
+        <% } %>
+      </div>
+    </div>
+
+
+    <div class="d-inline-block">
+
     </div>
   </div>
+</div>
 
 <%- include("partials/footer") -%>

@@ -55,20 +55,31 @@ exports.editDish = (req, res) => {
 
 exports.updateDish = (req, res) => {
   const dishId = req.body.update;
-  UserDish.findOneAndUpdate({
-      _id: dishId
-    }, {
-      "$set": {
-        name: req.body.dish,
-        description: req.body.description,
-        tags: req.body.tags
-      }
-    })
-    .then(dish => {
-      res.redirect("/dishes");
-    }).catch(err => {
-      console.log(err);
-    });
+  UserDish.findOne({_id : dishId})
+  .then(crew => {
+    let imagePath = crew.image;
+    if(req.file){
+      imagePath = req.file.path;
+    }
+
+    UserDish.findOneAndUpdate({
+        _id: dishId
+      }, {
+        "$set": {
+          name: req.body.dish,
+          description: req.body.description,
+          tags: req.body.tags,
+          image : imagePath
+        }
+      })
+      .then(dish => {
+        res.redirect("/dishes");
+      }).catch(err => {
+        console.log(err);
+      });
+  }).catch(err => {
+    console.log(err);
+  });
 }
 
 exports.deleteDish = (req, res) => {
@@ -100,7 +111,8 @@ exports.addDish = (req, res) => {
   if(req.file){
     imagePath = req.file.path;
   }
-  
+  console.log(req.file);
+
   const dish = new UserDish({
     name: req.body.dish,
     description: req.body.description,
