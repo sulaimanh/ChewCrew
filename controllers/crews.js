@@ -428,6 +428,8 @@ exports.eventPage = (req, res) => {
                 userId: req.user.id,
                 userCrewsId: req.user.crewId,
               });
+            }).catch(err =>{
+              console.log(err);
             })
         }).catch(err => {
           console.log(err);

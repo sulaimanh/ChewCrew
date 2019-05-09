@@ -86,18 +86,6 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-const crewRouter = require("./routes/crews");
-const profileRouter = require("./routes/profile");
-const createRouter = require("./routes/create");
-const joinRouter = require("./routes/join");
-const dishesRouter = require("./routes/dishes");
-
-app.use("/crews", crewRouter);
-app.use("/create", createRouter);
-app.use("/profile", profileRouter);
-app.use("/join", joinRouter);
-app.use("/dishes", dishesRouter);
-
 
 app.get("/", function(req, res){
   res.render("signin");
@@ -118,7 +106,7 @@ app.get("/auth/google/profile",
   }),
   function(req, res) {
 
-    res.redirect("./routes/profile");
+    res.redirect("/profile");
   });
 
 
@@ -178,6 +166,17 @@ app.post("/register", function(req, res) {
   });
 });
 
+const crewRouter = require("./routes/crews");
+const profileRouter = require("./routes/profile");
+const createRouter = require("./routes/create");
+const joinRouter = require("./routes/join");
+const dishesRouter = require("./routes/dishes");
+
+app.use("/crews", crewRouter);
+app.use("/create", createRouter);
+app.use("/profile", profileRouter);
+app.use("/join", joinRouter);
+app.use("/dishes", dishesRouter);
 
 
 
