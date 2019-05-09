@@ -10,17 +10,6 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
-const MongoStore = require("connect-mongo")(session);
-
-
-
-// // - Set storage engine
-// const storage = multer.diskStorage({
-//   destination : "public/uploads/",
-//   filename : function(req, file, cb){
-//     cb(null, file.fieldname + " - " + Date.now() + path.extname(file.originalname));
-//   }
-// });
 
 
 
@@ -37,8 +26,7 @@ app.use(bodyParser.urlencoded({
 app.use(session({
   secret: "Our little secret.",
   resave: false,
-  saveUninitialized: false,
-  store: new MongoStore(options)
+  saveUninitialized: false
 }));
 
 // - We do this in order to use passport. We initialize it here
