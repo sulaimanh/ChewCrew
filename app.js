@@ -27,7 +27,8 @@ app.use(bodyParser.urlencoded({
 app.use(session({
   secret: "Our little secret.",
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store : new MongoStore({"mongodb+srv://admin-chewcrew:"+process.env.PASSWORD+"@chewcrew-8ouk2.mongodb.net/chewcrewDB"})
 }));
 
 
