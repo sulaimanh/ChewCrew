@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({
 app.use(session({
   secret: "Our little secret.",
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
   store: new MongoStore(options)
 }));
 
