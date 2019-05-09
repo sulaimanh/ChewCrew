@@ -18,7 +18,7 @@ const app = express();
 app.use(express.static("public"));
 app.use("/public/uploads", express.static("public/uploads"))
 app.set('view engine', 'ejs');
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -32,8 +32,8 @@ mongoose.set("useCreateIndex", true);
 // - Create a session middleware with the given options
 app.use(session({
   secret: "Our little secret.",
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   store : new MongoStore(
     {mongooseConnection : mongoose.connection,
     ttl : 2*24*60*60
@@ -127,9 +127,7 @@ app.post("/login", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log("BEFORE");
       passport.authenticate("local")(req, res, function() {
-        console.log("AFTER");
         res.redirect("/profile")
       });
     }
