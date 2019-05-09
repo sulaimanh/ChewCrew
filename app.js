@@ -23,12 +23,21 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+mongoose.connect("mongodb+srv://admin-chewcrew:"+process.env.PASSWORD+"@chewcrew-8ouk2.mongodb.net/chewcrewDB", {
+  useNewUrlParser: true
+});
+mongoose.set("useCreateIndex", true);
+
+
 // - Create a session middleware with the given options
 app.use(session({
   secret: "Our little secret.",
   resave: false,
   saveUninitialized: false,
-  store : new MongoStore({"mongodb+srv://admin-chewcrew:"+process.env.PASSWORD+"@chewcrew-8ouk2.mongodb.net/chewcrewDB"})
+  store : new MongoStore(
+    {mongooseConnection : mongoose.connection,
+    ttl : 2*24*60*60
+  })
 }));
 
 
@@ -37,10 +46,7 @@ app.use(passport.initialize());
 // - We use passport to also set up our session
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://admin-chewcrew:"+process.env.PASSWORD+"@chewcrew-8ouk2.mongodb.net/chewcrewDB", {
-  useNewUrlParser: true
-});
-mongoose.set("useCreateIndex", true);
+
 
 const User = require("./models/User.js");
 
