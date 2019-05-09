@@ -117,8 +117,8 @@ app.get("/auth/google/profile",
     failureRedirect: "/"
   }),
   function(req, res) {
-    // - Succesful authetication, redirect to secrets
-    res.redirect("/profile");
+
+    res.redirect("./routes/profile");
   });
 
 
