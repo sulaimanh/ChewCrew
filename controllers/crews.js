@@ -353,7 +353,7 @@ exports.deleteEvent = (req, res) => {
           }
         })
         .then(user => {
-          res.redirect("/crews/"+ev.crewId);
+          res.redirect("/crews/" + ev.crewId);
         }).catch(err => {
           console.log(err);
         })
@@ -458,9 +458,7 @@ exports.addEventDish = (req, res) => {
           _id: req.body.eventId
         }, {
           $push: {
-            dishId: {
-              _id: dish._id
-            }
+            dishId: dish._id
           }
         })
         .then(ev => {
@@ -486,11 +484,46 @@ exports.deleteEventDish = (req, res) => {
           }
         })
         .then(ev => {
-          res.redirect("/crews/event/"+ev._id);
+          res.redirect("/crews/event/" + ev._id);
         }).catch(err => {
           console.log(err);
         });
     }).catch(err => {
       console.log(err);
     })
+}
+
+exports.updateMessage = (req, res) => {
+  const message = req.body.message;
+  Crew.findByIdAndUpdate(req.body.crewId, {
+      $push: {
+        messages: {
+          title: req.body.titleMessage,
+          content: req.body.message
+        }
+      }
+    })
+    .then(crew => {
+      res.redirect("/crews/" + crew._id);
+    }).catch(err => {
+      console.log(err);
+    });
+}
+
+exports.deleteMessage = (req, res) => {
+  const messageId = req.body.messageId;
+  const crewId = req.body.crewId;
+  console.log(crewId);
+  Crew.findByIdAndUpdate(crewId, {
+      $pull : {
+        messages : {
+          _id : messageId
+        }
+      }
+  })
+  .then(crew => {
+    res.redirect("/crews/" + crew._id);
+  }).catch(err => {
+    console.log(err);
+  });
 }

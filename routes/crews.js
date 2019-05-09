@@ -48,6 +48,10 @@ router.post("/createEvent", upload.single("image"), crews.createEvent);
 
 router.post("/createCrew", upload.single("image"), crews.createCrew);
 
+router.post("/updateMessage", crews.updateMessage);
+
+router.post("/deleteMessage", crews.deleteMessage);
+
 function ensureAuthenticated(req,res,next){
   if(req.isAuthenticated()){
     return next();

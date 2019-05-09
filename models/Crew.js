@@ -32,6 +32,10 @@ const crewSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Event",
     required: false
+  }],
+  messages : [{
+    title : { type : String , required : false},
+    content : { type : String , required : false }
   }]
 
   // membersName : [{type : String, required : true}]
