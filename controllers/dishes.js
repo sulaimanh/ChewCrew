@@ -1,16 +1,26 @@
 const User = require("../models/User.js");
 const UserDish = require("../models/UserDish.js");
 const Crew = require("../models/Crew.js");
+const Event = require("../models/Event.js");
 
 exports.dishes = (req, res) => {
   let active = 3;
   if (req.query.dishName) {
     const dishName = req.query.dishName;
-    UserDish.find({_id: req.user.dishId,
+    UserDish.find({
+        _id: req.user.dishId,
         $text: {
           $search: dishName
         }
-      },{score : {$meta : "textScore"}}).sort( { score: { $meta: "textScore" } } )
+      }, {
+        score: {
+          $meta: "textScore"
+        }
+      }).sort({
+        score: {
+          $meta: "textScore"
+        }
+      })
       .then(dishes => {
         res.render("dishes", {
           active: active,
@@ -55,31 +65,33 @@ exports.editDish = (req, res) => {
 
 exports.updateDish = (req, res) => {
   const dishId = req.body.update;
-  UserDish.findOne({_id : dishId})
-  .then(crew => {
-    let imagePath = crew.image;
-    if(req.file){
-      imagePath = req.file.path;
-    }
+  UserDish.findOne({
+      _id: dishId
+    })
+    .then(crew => {
+      let imagePath = crew.image;
+      if (req.file) {
+        imagePath = req.file.path;
+      }
 
-    UserDish.findOneAndUpdate({
-        _id: dishId
-      }, {
-        "$set": {
-          name: req.body.dish,
-          description: req.body.description,
-          tags: req.body.tags,
-          image : imagePath
-        }
-      })
-      .then(dish => {
-        res.redirect("/dishes");
-      }).catch(err => {
-        console.log(err);
-      });
-  }).catch(err => {
-    console.log(err);
-  });
+      UserDish.findOneAndUpdate({
+          _id: dishId
+        }, {
+          "$set": {
+            name: req.body.dish,
+            description: req.body.description,
+            tags: req.body.tags,
+            image: imagePath
+          }
+        })
+        .then(dish => {
+          res.redirect("/dishes");
+        }).catch(err => {
+          console.log(err);
+        });
+    }).catch(err => {
+      console.log(err);
+    });
 }
 
 exports.deleteDish = (req, res) => {
@@ -88,18 +100,18 @@ exports.deleteDish = (req, res) => {
       _id: dishId
     })
     .then(dish => {
-      User.updateOne({
-          _id: req.user._id
-        }, {
-          $pull: {
-            dishId: dishId
-          }
-        })
-        .then(user => {
-          res.redirect("/dishes");
-        }).catch(err => {
-          console.log(err);
-        })
+        User.updateOne({
+            _id: req.user._id
+          }, {
+            $pull: {
+              dishId: dishId
+            }
+          })
+          .then(user => {
+            res.redirect("/dishes");
+          }).catch(err => {
+            console.log(err);
+          })
     }).catch(err => {
       console.log(err);
     });
@@ -108,7 +120,7 @@ exports.deleteDish = (req, res) => {
 
 exports.addDish = (req, res) => {
   let imagePath;
-  if(req.file){
+  if (req.file) {
     imagePath = req.file.path;
   }
 
@@ -117,25 +129,26 @@ exports.addDish = (req, res) => {
     description: req.body.description,
     tags: req.body.tags,
     creator: req.user._id,
-    image : imagePath
+    image: imagePath
   });
+
 
   dish.save()
     .then(createdDish => {
-      User.findOneAndUpdate({
-          _id: req.user._id
-        }, {
-          $push: {
-            dishId: {
-              _id: dish._id
+        User.findOneAndUpdate({
+            _id: req.user._id
+          }, {
+            $push: {
+              dishId: {
+                _id: dish._id
+              }
             }
-          }
-        })
-        .then(user => {
-          res.redirect("/dishes");
-        }).catch(err => {
-          console.log(err);
-        })
+          })
+          .then(user => {
+            res.redirect("/dishes");
+          }).catch(err => {
+            console.log(err);
+          })
     }).catch(err => {
       console.log(err);
     });

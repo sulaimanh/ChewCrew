@@ -66,7 +66,7 @@ exports.createCrew = (req, res) => {
     description: req.body.crewDescription,
     creator: req.user._id,
     creatorName: creatorName,
-    members: req.user._id,
+    members: [req.user._id],
     image: imagePath
   });
 
@@ -86,6 +86,8 @@ exports.createCrew = (req, res) => {
         }).catch(err => {
           console.log(err);
         });
+    }).catch(err => {
+      console.log(err);
     });
 };
 
@@ -174,16 +176,26 @@ exports.enterCrew = (req, res) => {
           _id: crew.events
         })
         .then(events => {
-          res.render("enterCrew", {
-            active: active,
-            crew: crew,
-            userId: req.user.id,
-            userCrewsId: req.user.crewId,
-            events: events
-          });
+          User.find({
+              _id: crew.members
+            })
+            .then(members => {
+              res.render("enterCrew", {
+                active: active,
+                crew: crew,
+                userId: req.user.id,
+                userCrewsId: req.user.crewId,
+                events: events,
+                members: members
+              });
+            }).catch(err => {
+              console.log(err);
+            })
         }).catch(err => {
           console.log(err);
         })
+    }).catch(err => {
+      console.log(err);
     });
 };
 
@@ -299,7 +311,9 @@ exports.createEvent = (req, res) => {
     time: req.body.time,
     date: req.body.date,
     location: req.body.location,
-    image: imagePath
+    image: imagePath,
+    crewId: req.body.create,
+    creator: req.user.id
   });
 
   newEvent.save()
@@ -326,6 +340,7 @@ exports.createEvent = (req, res) => {
 
 exports.deleteEvent = (req, res) => {
   const eventId = req.body.eventId;
+  const crewId = req.body.crewId;
   Event.findOneAndDelete({
       _id: eventId
     })
@@ -338,7 +353,7 @@ exports.deleteEvent = (req, res) => {
           }
         })
         .then(user => {
-          res.redirect("/crews/" + req.body.crewId);
+          res.redirect("/crews/"+ev.crewId);
         }).catch(err => {
           console.log(err);
         })
@@ -350,13 +365,15 @@ exports.deleteEvent = (req, res) => {
 
 
 exports.joinEvent = (req, res) => {
-    Event.updateOne({_id : req.body.join}, {
-      $addToSet : {
-        members : req.user.id
+  Event.updateOne({
+      _id: req.body.join
+    }, {
+      $addToSet: {
+        members: req.user.id
       }
     })
     .then(eventUpdate => {
-      res.redirect("/crews/" + req.body.crewId)
+      res.redirect("/crews/event/" + req.body.join)
     }).catch(err => {
       console.log(err);
     });
@@ -365,15 +382,115 @@ exports.joinEvent = (req, res) => {
 exports.leaveEvent = (req, res) => {
   const eventId = req.body.leave;
   Event.updateOne({
-    _id: eventId
-  }, {
-    $pull: {
-      members: req.user._id
-    }
-  })
-  .then(updated => {
-    res.redirect("/crews/" + req.body.crewId);
-  }).catch(err => {
-    console.log(err);
+      _id: eventId
+    }, {
+      $pull: {
+        members: req.user._id
+      }
+    })
+    .then(updated => {
+      UserDish.findOneAndDelete({
+        _id: req.body.dishId
+      }).then(dish => {
+        res.redirect("/crews/" + req.body.crewId);
+      }).catch(err => {
+        console.log(err);
+      })
+    }).catch(err => {
+      console.log(err);
+    });
+}
+
+exports.enterEvent = (req, res) => {
+  res.redirect("/crews/event/" + req.body.enter);
+}
+
+exports.eventPage = (req, res) => {
+  let active = 0;
+  const eventId = req.params.eventPage;
+  Event.findOne({
+      _id: eventId
+    })
+    .then(ev => {
+      User.find({
+          _id: ev.members
+        })
+        .then(members => {
+          UserDish.find({
+              _id: ev.dishId
+            })
+            .then(dishes => {
+              res.render("eventPage", {
+                active: active,
+                ev: ev,
+                members: members,
+                dishes: dishes,
+                userId: req.user.id,
+                userCrewsId: req.user.crewId,
+              });
+            })
+        }).catch(err => {
+          console.log(err);
+        })
+    }).catch(err => {
+      console.log(err);
+    });
+}
+
+exports.addEventDish = (req, res) => {
+  let imagePath;
+  if (req.file) {
+    imagePath = req.file.path;
+  }
+
+  const dish = new UserDish({
+    name: req.body.dish,
+    description: req.body.description,
+    tags: req.body.tags,
+    creator: req.user._id,
+    image: imagePath
   });
+
+
+  dish.save()
+    .then(createdDish => {
+      Event.findOneAndUpdate({
+          _id: req.body.eventId
+        }, {
+          $push: {
+            dishId: {
+              _id: dish._id
+            }
+          }
+        })
+        .then(ev => {
+          res.redirect("/crews/event/" + req.body.eventId);
+        }).catch(err => {
+          console.log(err);
+        });
+    }).catch(err => {
+      console.log(err);
+    });
+}
+
+exports.deleteEventDish = (req, res) => {
+  const dishId = req.body.dishTitle;
+  const even = req.body.enter;
+  UserDish.findOneAndDelete({
+      _id: dishId
+    })
+    .then(dish => {
+      Event.findByIdAndUpdate(even, {
+          $pull: {
+            dishId: dish._id
+          }
+        })
+        .then(ev => {
+          res.redirect("/crews/event/"+ev._id);
+        }).catch(err => {
+          console.log(err);
+        });
+    }).catch(err => {
+      console.log(err);
+    })
 }

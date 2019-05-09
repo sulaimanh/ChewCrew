@@ -21,19 +21,9 @@ router.get("/", ensureAuthenticated, crews.createPage);
 
 router.get("/:editCrewPage", ensureAuthenticated, crews.editCrewPage);
 
-router.post("/createCrew", upload.single("image"), crews.createCrew);
-
 router.post("/editCrew", crews.editCrew);
 
-router.post("/submitEditCrew", upload.single("image"), crews.submitEditCrew);
 
-router.post("/createEvent", upload.single("image"), crews.createEvent);
-
-router.post("/joinEvent", crews.joinEvent);
-
-router.post("/leaveEvent", crews.leaveEvent);
-
-router.post("/deleteEvent", crews.deleteEvent);
 
 function ensureAuthenticated(req,res,next){
   if(req.isAuthenticated()){

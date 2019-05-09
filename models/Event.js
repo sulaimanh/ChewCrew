@@ -30,7 +30,22 @@ const eventSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true
-  }]
+  }],
+  dishId : [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "UserDish",
+    required: false
+  }],
+  crewId : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Crew",
+    required: false
+  },
+  creator : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: false
+  }
   // membersName : [{type : String, required : true}]
   // Image : ,
   // events : [events],
