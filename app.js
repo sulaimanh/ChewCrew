@@ -67,8 +67,8 @@ passport.deserializeUser(function(id, done) {
 // - COMPLETE
 passport.use(new GoogleStrategy({
     clientID: process.env.clientID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "https://floating-coast-35089.herokuapp.com/auth/google/profile",
+    clientSecret: process.env.clientSecret,
+    callbackURL: "http://localhost:3000/auth/google/profile",
     // - We add this because of the Google+ deprecation
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
