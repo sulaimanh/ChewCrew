@@ -513,7 +513,6 @@ exports.updateMessage = (req, res) => {
 exports.deleteMessage = (req, res) => {
   const messageId = req.body.messageId;
   const crewId = req.body.crewId;
-  console.log(crewId);
   Crew.findByIdAndUpdate(crewId, {
       $pull : {
         messages : {
