@@ -44,7 +44,7 @@ app.use(passport.initialize());
 // - We use passport to also set up our session
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/chewcrewDB", {
+mongoose.connect("mongodb+srv://admin-chewcrew:Openyoureyes8@chewcrew-8ouk2.mongodb.net/chewcrewDB", {
   useNewUrlParser: true
 });
 mongoose.set("useCreateIndex", true);
