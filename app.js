@@ -67,7 +67,7 @@ passport.deserializeUser(function(id, done) {
 
 // - COMPLETE
 passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
+    clientID: process.env.clientID,
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: "http://localhost:3000/auth/google/profile",
     // - We add this because of the Google+ deprecation
