@@ -179,8 +179,13 @@ app.use("/profile", profileRouter);
 app.use("/join", joinRouter);
 app.use("/dishes", dishesRouter);
 
+let port = process.env.PORT;
+if(port == null || port == ""){
+  port = 3000;
+}
+
 
 // listen on port 3000
-app.listen(3000, () => {
+app.listen(port, function() => {
   console.log("Server is listening on port 3000");
 });
