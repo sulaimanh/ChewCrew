@@ -381,7 +381,7 @@ exports.joinEvent = (req, res) => {
 
 exports.leaveEvent = (req, res) => {
   const eventId = req.body.leave;
-  Event.updateOne({
+  Event.findByIdAndUpdate({
       _id: eventId
     }, {
       $pull: {
@@ -392,7 +392,7 @@ exports.leaveEvent = (req, res) => {
       UserDish.findOneAndDelete({
         _id: req.body.dishId
       }).then(dish => {
-        res.redirect("/crews/" + req.body.crewId);
+        res.redirect("/crews/" + updated.crewId);
       }).catch(err => {
         console.log(err);
       })

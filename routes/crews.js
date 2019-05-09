@@ -46,8 +46,6 @@ router.post("/addEventDish", upload.single("image"), crews.addEventDish);
 
 router.post("/createEvent", upload.single("image"), crews.createEvent);
 
-router.post("/submitEditCrew", upload.single("image"), crews.submitEditCrew);
-
 router.post("/createCrew", upload.single("image"), crews.createCrew);
 
 function ensureAuthenticated(req,res,next){

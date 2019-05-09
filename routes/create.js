@@ -21,6 +21,8 @@ router.get("/", ensureAuthenticated, crews.createPage);
 
 router.get("/:editCrewPage", ensureAuthenticated, crews.editCrewPage);
 
+router.post("/submitEditCrew", upload.single("image"), crews.submitEditCrew);
+
 router.post("/editCrew", crews.editCrew);
 
 

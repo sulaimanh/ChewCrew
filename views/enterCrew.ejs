@@ -118,9 +118,13 @@
                     <button formaction="/crews/joinEvent" type="" class="btn btn-primary mt-2" name="join" value="<%= ev._id %>"><i class="fas fa-user-plus"></i> Join Event</button>
                 <%} else{%>
                 <button formaction="/crews/leaveEvent" type="" class="btn btn-warning mt-2" name="leave" value="<%=ev._id%>"><i class="fas fa-times-circle"></i> Leave Event</button>
-                <%}%>
-                <button formaction="/crews/deleteEvent" type="" class="btn btn-danger mt-2" name="eventId" value="<%= ev._id %>"><i class="fas fa-trash-alt"></i> Delete Event</button>
                 <input type="hidden" name="crewId" value="<%= ev.crewId %>">
+                <%}%>
+
+                <% if(crew.creator == userId) {%>
+                  <button formaction="/crews/deleteEvent" type="" class="btn btn-danger mt-2" name="eventId" value="<%= ev._id %>"><i class="fas fa-trash-alt"></i> Delete Event</button>
+                  <input type="hidden" name="crewId" value="<%= ev.crewId %>">
+                <% } %>
               </div>
             </div>
           </tr>
@@ -130,7 +134,7 @@
         <h3 class="font-weight-light mt-4" align="center"> You are not a part of this crew. </h3>
         <% } %>
 
-        <div class="col-lg-6">
+        <div class="col-lg-12">
           <h4 class="mt-5">Members:</h4>
           <hr />
           <% members.forEach(function(member){ %>
