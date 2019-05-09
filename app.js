@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+mongoose.connect(connectionOptions);
 // - Create a session middleware with the given options
 app.use(session({
   secret: "Our little secret.",
