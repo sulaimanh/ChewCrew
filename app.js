@@ -44,7 +44,7 @@ app.use(passport.initialize());
 // - We use passport to also set up our session
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://admin-chewcrew:Openyoureyes8@chewcrew-8ouk2.mongodb.net/chewcrewDB", {
+mongoose.connect("mongodb+srv://admin-chewcrew:"+process.env.PASSWORD+"@chewcrew-8ouk2.mongodb.net/chewcrewDB", {
   useNewUrlParser: true
 });
 mongoose.set("useCreateIndex", true);
@@ -186,6 +186,6 @@ if(port == null || port == ""){
 
 
 // listen on port 3000
-app.listen(port, () => {
-  console.log("Server is listening on port 3000");
+app.listen(port, function() {
+  console.log("Server started successfully");
 });
