@@ -13,5 +13,7 @@ exports.profile = (req, res) => {
           active : active,
           usersName : foundUser
         });
+  }).catch(err => {
+    console.log(err);
   });
 };
