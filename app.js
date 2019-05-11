@@ -116,23 +116,11 @@ app.get("/logout", function(req, res) {
   res.redirect("/");
 });
 
-// - LOGIN - COMPLETE
-app.post("/login", function(req, res) {
-  const user = new User({
-    username: req.body.username,
-    password: req.body.password
+app.post('/login',
+  passport.authenticate('local', { failureRedirect: '/'}),
+  function(req, res) {
+    res.redirect('/profile');
   });
-
-  req.login(user, function(err) {
-    if (err) {
-      console.log(err);
-    } else {
-      passport.authenticate("local")(req, res, function() {
-        res.redirect("/profile")
-      });
-    }
-  });
-});
 
 // - REGISTER - COMPLETE
 app.post("/register", function(req, res) {
