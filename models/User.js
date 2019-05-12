@@ -25,7 +25,11 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Crew",
     required: false
-  }]
+  }],
+  image: {
+    type: String,
+    required: false
+  }
   // image : ,
 
   // userEvents : [userEvents],

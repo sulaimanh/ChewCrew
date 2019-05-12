@@ -1,18 +1,85 @@
 <%- include("partials/header") -%>
 
-<h2 class="pb-5">Welcome, <%= usersName.firstname + " " + usersName.lastname %></h2>
 
-  <div class="row pb-4">
-    <h4 class=" w-100 pb-2 pt-2">
-      Events happening:
-      <hr>
-    </h4>
+<div class="row">
+
+  <div class="col-lg-3">
+    <h3 class="">
+      <%= usersName.firstname + " " + usersName.lastname %>
+    </h3>
+    <form class="mt-3" action="/profile/addPicture" method="post" enctype="multipart/form-data">
+      <img width="230" height="300" style="border-radius: 45%" src="<%= usersName.image %>" alt="">
+      <label class="mt-3 btn btn-primary">
+        Select Profile Picture
+        <input name="image" type="file" style="display: none">
+      </label>
+      <button class="mt-2 btn btn-success" type="submit" name="button">Upload</button>
+      <input type="hidden" name="userId" value="<%= usersName._id %>">
+    </form>
   </div>
 
-  <div class="">
-    
-  </div>
 
+  <div class="col-lg-9">
+      <h4 class=" w-100 pb-2 pt-2">
+        Events you are attending:
+        <hr>
+      </h4>
+      <form class="" action="/crews/enterEvent" method="post">
+      <% events.forEach(function(ev){ %>
+      <tr>
+        <a id="www" class="btn pot-link mt-2 w-100" data-toggle="collapse" href="#<%= "a"+ev._id %>" role="button">
+          <%= ev.name %>
+        </a>
+        <div class="collapse mt-2" id="<%= "a"+ev._id %>">
+          <div class="card card-body pl-5 pr-5">
+            <div class="row float-right">
+              <div class="col-md-4 col-sm-12">
+                <h3>
+                  <%= ev.name %>
+                </h3>
+                <img src="/<%= ev.image %>" class="imageSize img-fluid rounded" alt="">
+              </div>
+              <div class="col-md-8 col-sm-12 mt-4">
+                <h5>Description:</h5>
+                <p>
+                  <%= ev.description %>
+                </p>
+
+
+                <div class="row">
+                  <div class="col-md-4 col-sm-6 mt-4">
+                    <h5>Time:</h5>
+                    <p>
+                      <%= ev.time %>
+                    </p>
+                  </div>
+                  <div class="col-md-4 col-sm-6 mt-4">
+                    <h5>Date:</h5>
+                    <p>
+                      <%= ev.date %>
+                    </p>
+                  </div>
+                  <div class="col-md-4 col-sm-6 mt-4">
+                    <h5>Location:</h5>
+                    <p>
+                      <%= ev.location %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <br>
+            </div>
+            <button type="submit" class="btn btn-info mt-4" name="enter" value="<%= ev._id %>"><i class="fas fa-door-open"></i> Enter Event</button>
+            <button formaction="/crews/leaveEvent" type="" class="btn btn-warning mt-2" name="leave" value="<%=ev._id%>"><i class="fas fa-times-circle"></i> Leave Event</button>
+            <input type="hidden" name="crewId" value="<%= ev.crewId %>">
+          </div>
+        </div>
+      </tr>
+      <% }) %>
+      </form>
+  </div>
 </div>
+
+
 
 <%- include("partials/footer") -%>
