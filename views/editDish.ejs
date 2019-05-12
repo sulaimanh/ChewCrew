@@ -10,14 +10,14 @@
           <input name="dish" type="text" class="form-control" value="<%= dish.name %>" required="true">
         </div>
         <div class="col-lg-2">
-          <img src="<%= dish.image %>" class="img-fluid rounded" alt="">
-          <label class="btn btn-primary">
+          <img src="/<%= dish.image %>" class="img-fluid rounded" alt="">
+          <label class="mt-4 btn btn-primary">
             Change Picture
             <input name="image" type="file" style="display: none;">
           </label>
         </div>
         <div class="col-lg-10 ">
-          <textarea name="description" placeholder="Description" class="form-control" name="postBody" rows="5" cols="30"><%= dish.description %></textarea>
+          <textarea name="description" placeholder="Description" class="form-control" name="postBody" rows="8" cols="30"><%= dish.description %></textarea>
         </div>
         <div class="col-12">
           <input name="tags" class="form-control mt-3" type="text" value="<%= dish.tags %>" placeholder="Tags">
