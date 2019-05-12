@@ -158,8 +158,15 @@
         <h4 class="mt-5">Members:</h4>
         <hr />
         <% members.forEach(function(member){ %>
-        <p>
-          <%= member.firstname + " " + member.lastname%>
+
+        <p class="">
+          <% if(member.image){ %>
+            <img width="40" height="50" style="border-radius: 50%" src="/<%= member.image %>" alt="">
+          <% }else{ %>
+            <img width="40" height="40" style="border-radius: 50%" src="/images/user.png" alt="">
+          <% } %>
+
+           <%= member.firstname + " " + member.lastname%>
         </p>
         <% }) %>
       </div>
