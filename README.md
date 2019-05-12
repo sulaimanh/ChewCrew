@@ -3,4 +3,4 @@ Official Chew Crew Website
 https://chewcrewapp.herokuapp.com/
 
 
-![alt text](loginscreen.png "Login Page")
+This is a social media website which is meant for organizing events more effectively.
