@@ -24,6 +24,9 @@
         Events you are attending:
         <hr>
       </h4>
+      <% if(events.length == 0){ %>
+        <h3 class="font-weight-light mt-4" align="center"> You are not a part of any events </h3>
+      <% } %>
       <form class="" action="/crews/enterEvent" method="post">
       <% events.forEach(function(ev){ %>
       <tr>
