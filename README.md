@@ -11,14 +11,19 @@ Users are capable of signing up by creating an account with Chew Crew or they ca
 Each user can upload a profile image.
 Every event the user is a part of will be presented on this page for easy access
 
+
+## Create a Crew
+Every user can create a Crew. They can set a Crew name, upload a Crew profile image, and set a description. Each Crew is viewable to everyone. However, the option of creating a private crew will be available in the near future.
+
 ## Crews
 On this page, every crew the user is a part of is presented on the screen. Users can also search through the search bar for a specific crew.
 
 ### Crew Functionality
-
-
-## Create a Crew
-Every user can create a Crew. They can set a Crew name, upload a Crew profile image, and set a description. Each Crew is viewable to everyone. However, the option of creating a private crew will be available in the near future.
+- The creator of the crew is able of posting updates for all the users to see. 
+- Only the creator of the crew is able to create an event. 
+- Each user is capable of joining or leaving a crew. 
+- When a user joins a crew, they will then be able to see all of the events of that specific crew. 
+- For each event, a user can join or leave an event. A user can also submit a dish they would like to bring to an event
 
 ## Join a Crew
 Every Crew is public by default and is viewable by all users. However, the option of creating a private crew will be available in the near future. On this page, a user can search for and join a Crew.
