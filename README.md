@@ -20,9 +20,11 @@ Every user can create a Crew. They can set a Crew name, upload a Crew profile im
 On this page, every crew the user is a part of is presented on the screen. Users can also search through the search bar for a specific crew.
 
 ### Crew Functionality
-- The creator of the crew is able of posting updates for all the users to see. 
+- The creator of the Crew is able of posting updates for all the users to see. 
+- The creator of the Crew is also able to edit the Crew.
 - Only the creator of the crew is able to create an event. 
-- Each user is capable of joining or leaving a crew. 
+- Each user is capable of joining or leaving a crew.
+- A list of members of the crew is presented on the page
 - When a user joins a crew, they will then be able to see all of the events of that specific crew. 
 - For each event, a user can join or leave an event. A user can also submit a dish they would like to bring to an event
 
